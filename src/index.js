@@ -15,14 +15,14 @@ app.listen(port, ()=>{
 })
 
 
-const bcrypt = require('bcryptjs')
-const myFunction = async () => {
-    const password = 'Red12345!'
-    const hashedPassword = await bcrypt.hash(password, 8)
+// const bcrypt = require('bcryptjs')
+// const myFunction = async () => {
+//     const password = 'Red12345!'
+//     const hashedPassword = await bcrypt.hash(password, 8)
     
-    // hasheは不可逆なので、ハッシュ値で比較
-    const isMatch = await bcrypt.compare('Red12345!', hashedPassword)
-    console.log(isMatch)
-}
+//     // hasheは不可逆なので、ハッシュ値で比較
+//     const isMatch = await bcrypt.compare('Red12345!', hashedPassword)
+//     console.log(isMatch)
+// }
 
-myFunction()
+// myFunction()

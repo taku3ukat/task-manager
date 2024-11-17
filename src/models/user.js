@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
+// スキーマを定義、スキーマに対し後述の関数などを定義する
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -39,8 +41,23 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Age must be a positive number')
             }
         }
-    }
+    },
+    tokens:[{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 })
+
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign( { _id: user._id.toString() }, 'thiismynewcourse' )
+
+    user.tokens = user.tokens.concat({ token })
+    await user.save()
+    return token
+}
 
 // userスキーマに対し、下記の静的関数"findByCredentials"を定義。
 userSchema.statics.findByCredentials = async (email, password) => {
